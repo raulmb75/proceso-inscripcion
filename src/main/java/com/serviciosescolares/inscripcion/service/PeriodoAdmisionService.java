@@ -38,6 +38,11 @@ public class PeriodoAdmisionService {
         }
     }
 
+    //Buscar periodo por nombre de periodo
+    public PeriodosAdmision buscarPeriodoPorNombre(String nombrePeriodoAdmision){
+        return periodoAdmsionRepository.buscarPeriodoPorNombre(nombrePeriodoAdmision);
+    }
+
     //Modificar un periodo
     public PeriodosAdmision cambiarPeriodo(Long idPeriodoAdmision, PeriodosAdmision periodosAdmision) {
         Optional<PeriodosAdmision> optionalPeriodo = periodoAdmsionRepository.findById(idPeriodoAdmision);
@@ -52,6 +57,9 @@ public class PeriodoAdmisionService {
             periodo.setNombrePeriodoAdmision(periodosAdmision.getNombrePeriodoAdmision());
             periodo.setFechaInicio(periodosAdmision.getFechaInicio());
             periodo.setFechaFin(periodosAdmision.getFechaFin());
+            periodo.setUrlProcesoAdmision(periodosAdmision.getUrlProcesoAdmision());
+            periodo.setUrlProcesoInscripcion(periodosAdmision.getUrlProcesoInscripcion());
+
 
             periodoAdmsionRepository.save(periodo);
 

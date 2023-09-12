@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/periodo/admision")
 public class PeriodoAdmisionController {
 
@@ -17,10 +18,13 @@ public class PeriodoAdmisionController {
     @Autowired
     private PeriodoAdmisionService periodoAdmisionService;
 
+    @PostMapping("/crear/periodo")
+    public PeriodosAdmision crearPeriodo(@RequestBody PeriodosAdmision periodosAdmision) {
+        return periodoAdmisionService.crearPeriodo(periodosAdmision);
+    }
 
     @GetMapping("/obtener/todos")
     public List<PeriodosAdmision> getAllEstudiantes() {
-        System.out.println("Porque no jala?");
         return periodoAdmisionService.obtenerLosPeriodos();
     }
 
@@ -33,10 +37,13 @@ public class PeriodoAdmisionController {
         return new ResponseEntity<>(periodos, HttpStatus.OK);
     }
 
-    @PostMapping("/crear/periodo")
-    public PeriodosAdmision crearPeriodo(@RequestBody PeriodosAdmision periodosAdmision) {
-        System.out.println("holaaaaaaa");
-        return periodoAdmisionService.crearPeriodo(periodosAdmision);
+    @GetMapping("/obtener/nombre/{nombrePeriodoAdmision}")
+    public ResponseEntity<PeriodosAdmision> obtenerPeriodoPorNombre(@PathVariable String nombrePeriodoAdmision) {
+        PeriodosAdmision periodos = periodoAdmisionService.buscarPeriodoPorNombre(nombrePeriodoAdmision);
+        if(periodos == null){
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(periodos, HttpStatus.OK);
     }
 
     @PutMapping("/modificar/periodo/{idPeriodoAdmision}")
